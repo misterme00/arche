@@ -1,0 +1,25 @@
+---
+- name: Install Autogen and its dependencies on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install Autogen dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      become: yes
+      with_items:
+        - autoconf
+        - automake
+        - libtool
+
+    - name: Install Autogen
+      apt:
+        name: autogen
+        state: present
+      become: yes
